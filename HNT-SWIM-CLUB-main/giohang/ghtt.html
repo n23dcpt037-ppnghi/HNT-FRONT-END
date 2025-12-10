@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng & Thanh Toán - HNT Swim Club</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="../sp_home/trangchu.html">HNT Swim Club</a> 
+            </div>
+            <nav class="main-nav">
+                <a href="../sp_home/trangchu.html">Trang Chủ</a>
+                <a href="../tuyenthu/user.html">Tuyển Thủ</a>
+                <a href="../sp_home/danhmuc_sp.html">Sản Phẩm</a>
+				<a href="../sk/sukien.html">Sự Kiện</a>
+				<a href="../bao/bao.html">Thông Tin</a>
+            </nav>
+            <div class="user-actions">
+                <a href="../đn/login.html">Đăng Nhập</a>
+                <a href="../nguoidung/nguoidung.html">Hồ Sơ</a>
+                <a href="ghtt.html" class="active-page">🛒 Giỏ Hàng</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="cart-page-wrapper">
+        <h1 class="cart-title">Giỏ hàng của bạn</h1>
+
+        <div class="cart-table-container">
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th class="col-image">Ảnh</th>
+                        <th class="col-info">Thông tin Sản phẩm</th>
+                        <th class="col-qty">Số lượng</th>
+                        <th class="col-price">Tạm tính</th>
+                        <th class="col-select-action">Chọn</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Giỏ hàng sẽ được render bằng JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="cart-summary-total">
+            <div class="summary-item">
+                <span class="label">Tổng tiền Sản phẩm</span>
+                <span class="value" id="total-product-price">630.000 VND</span>
+            </div>
+            <span class="operator">+</span>
+            <div class="summary-item">
+                <span class="label">Tổng phí Vận chuyển</span>
+                <span class="value" id="shipping-fee">30.000 VND</span>
+            </div>
+            <span class="operator">=</span>
+            <div class="summary-item final-total">
+                <span class="label">Tổng tiền Thanh toán</span>
+                <span class="value" id="final-total-price">660.000 VND</span>
+            </div>
+        </div>
+
+        <div class="checkout-buttons">
+            <button class="btn-checkout primary" id="btn-order">Đặt hàng</button>
+            <button class="btn-continue" id="btn-continue-shopping">Tiếp tục Mua sắm</button>
+        </div>
+        
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 HNT Swim Club Official Merchandise. Phát triển bởi Đội ngũ HNT.</p>
+    </footer>
+
+
+<script src="../scripts/main.js"></script>
+<script src="../scripts/giohang.js"></script>
+</body>
+</html>

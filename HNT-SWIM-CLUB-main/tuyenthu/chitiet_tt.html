@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Tuyển Thủ | HNT Swim Club</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .profile-page-container {
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        /* Header Profile Card */
+        .profile-header-card {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 40px;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-header-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #1e3c72, #2a5298);
+        }
+
+        .profile-image {
+            position: relative;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 3px solid #1e3c72;
+        }
+
+        .player-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #ffc107;
+            color: #333;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .profile-summary {
+            padding-top: 10px;
+        }
+
+        .player-nickname-big {
+            display: inline-block;
+            background: linear-gradient(90deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 30px;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .player-full-name {
+            font-size: 3rem;
+            margin: 15px 0;
+            color: #1e3c72;
+            font-weight: 700;
+        }
+
+        .player-position-detail {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed #eee;
+        }
+
+        .player-stats-quick {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #1e3c72;
+        }
+
+        .stat-item i {
+            color: #1e3c72;
+            font-size: 1.2rem;
+            width: 30px;
+        }
+
+        .contract-status {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        .contract-status h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .contract-dates {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .status-active {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Main Content Grid */
+        .main-content-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* Personal Info Card */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid #1e3c72;
+        }
+
+        .card h2 {
+            color: #1e3c72;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+            font-size: 1.8rem;
+        }
+
+        .personal-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .info-item:hover {
+            transform: translateY(-5px);
+            background: #e9ecef;
+        }
+
+        .info-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #333;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Awards Section */
+        .awards-container {
+            display: grid;
+            gap: 15px;
+        }
+
+        .award-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #fff;
+            border-radius: 10px;
+            border-left: 5px solid;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .award-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .award-gold { border-left-color: #FFD700; }
+        .award-silver { border-left-color: #C0C0C0; }
+        .award-bronze { border-left-color: #CD7F32; }
+        .award-record { border-left-color: #1e3c72; }
+
+        .award-icon {
+            font-size: 2rem;
+            width: 50px;
+            text-align: center;
+        }
+
+        .award-content h4 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .award-content p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Competition History Table */
+        .history-table-container {
+            overflow-x: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .history-table thead {
+            background: linear-gradient(90deg, #1e3c72, #2a5298);
+            color: white;
+        }
+
+        .history-table th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .history-table tbody tr {
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s;
+        }
+
+        .history-table tbody tr:hover {
+            background: #f5f9ff;
+        }
+
+        .history-table td {
+            padding: 15px;
+            color: #555;
+        }
+
+        .result-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .result-1 { background: #d4edda; color: #155724; }
+        .result-2 { background: #fff3cd; color: #856404; }
+        .result-3 { background: #f8d7da; color: #721c24; }
+        .result-other { background: #e2e3e5; color: #383d41; }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .sidebar-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .sidebar-card h3 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        .description-box {
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #1e3c72, #2a5298);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #2a5298, #3a62a8);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #1e3c72;
+            border: 2px solid #1e3c72;
+        }
+
+        .btn-secondary:hover {
+            background: #1e3c72;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Loading & Error States */
+        .loading-container, .error-container {
+            text-align: center;
+            padding: 80px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .loading-container i {
+            font-size: 4rem;
+            color: #1e3c72;
+            margin-bottom: 20px;
+        }
+
+        .error-container i {
+            font-size: 4rem;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .main-content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                grid-row: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profile-header-card {
+                grid-template-columns: 1fr;
+                padding: 25px;
+            }
+            
+            .player-full-name {
+                font-size: 2.2rem;
+            }
+            
+            .personal-info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .history-table {
+                min-width: 600px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .player-stats-quick {
+                grid-template-columns: 1fr;
+            }
+            
+            .contract-dates {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card, .profile-header-card {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        body {
+            padding-top: 80px; /* QUAN TRỌNG: Đẩy toàn bộ body xuống */
+        }
+        
+        .squad-container {
+            max-width: 1200px;
+            margin: 0 auto; /* Đổi từ 40px auto thành 0 auto */
+            padding: 20px; /* Thêm padding */
+        }
+        
+        .squad-title {
+            font-size: 3em;
+            margin-bottom: 40px;
+            color: #003366;
+            text-align: center;
+            padding-top: 20px;
+        }
+        
+        /* Đảm bảo main có padding-top */
+        main {
+            padding-top: 0; /* Đặt về 0 vì body đã có padding-top */
+            min-height: calc(100vh - 200px);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <a href="../sp_home/trangchu.html">HNT Swim Club</a>
+        </div>
+        <nav class="nav-menu">
+            <a href="../sp_home/trangchu.html">Trang Chủ</a>
+            <a href="user.html" class="current-page">Tuyển Thủ</a>
+            <a href="../sp_home/danhmuc_sp.html">Sản Phẩm</a>
+            <a href="../sk/sukien.html">Sự Kiện</a>
+            <a href="../bao/bao.html">Thông Tin</a>
+        </nav>
+        <div class="user-actions">
+            <a href="../đn/login.html">Đăng Nhập</a>
+            <a href="../nguoidung/nguoidung.html">Hồ Sơ</a>
+            <a href="../giohang/ghtt.html">🛒 Giỏ Hàng</a>
+        </div>
+    </header>
+
+    <div class="profile-page-container" id="athlete-detail-container">
+        <!-- Nội dung sẽ được tải động từ API -->
+        <div class="loading-container">
+            <i class="fas fa-swimmer fa-spin"></i>
+            <h2>Đang tải thông tin tuyển thủ...</h2>
+            <p>Vui lòng chờ trong giây lát</p>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 HNT Swim Club Official Merchandise. Phát triển bởi Đội ngũ HNT.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+        const API_URL = 'http://localhost:3000/api/athletes';
+        const container = document.getElementById('athlete-detail-container');
+        
+        // Lấy ID tuyển thủ từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        let athleteId = urlParams.get('id');
+        
+        // Debug
+        console.log('URL params:', window.location.search);
+        console.log('Athlete ID từ URL:', athleteId);
+        
+        // Fallback cho URL cũ
+        if (!athleteId) {
+            const path = window.location.pathname;
+            console.log('Pathname:', path);
+            const match = path.match(/chitiet_tt(\d+)\.html/);
+            athleteId = match ? match[1] : null;
+            console.log('Athlete ID từ path:', athleteId);
+        }
+        
+        if (!athleteId) {
+            console.error('Không tìm thấy ID tuyển thủ trong URL');
+            showError('Không tìm thấy thông tin tuyển thủ', 'Thiếu ID tuyển thủ trong URL');
+            return;
+        }
+        
+        try {
+            // Hiển thị loading
+            container.innerHTML = `
+                <div class="loading-container">
+                    <i class="fas fa-swimmer fa-spin"></i>
+                    <h2>Đang tải thông tin tuyển thủ...</h2>
+                    <p>Vui lòng chờ trong giây lát</p>
+                </div>
+            `;
+            
+            // GỌI API - PHẦN NÀY BỊ THIẾU TRONG CODE CỦA BẠN
+            console.log(`Gọi API: ${API_URL}/${athleteId}`);
+            const response = await fetch(`${API_URL}/${athleteId}`);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const athlete = await response.json();
+            console.log('Dữ liệu nhận được:', athlete);
+            
+            // Render dữ liệu
+            renderAthleteDetail(athlete);
+            
+        } catch (error) {
+            console.error('Lỗi khi tải thông tin tuyển thủ:', error);
+            showError('Không thể tải thông tin tuyển thủ', error.message);
+        }
+    });
+    
+    function showError(title, message) {
+        const container = document.getElementById('athlete-detail-container');
+        container.innerHTML = `
+            <div class="error-container">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h2>${title}</h2>
+                <p>${message}</p>
+                <a href="user.html" class="btn btn-primary" style="margin-top: 20px;">
+                    <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                </a>
+            </div>
+        `;
+    }
+        
+        function renderAthleteDetail(athlete) {
+            const container = document.getElementById('athlete-detail-container');
+            
+            // Format ngày sinh
+            const dob = athlete.date_of_birth || '03/03/2003';
+            const age = athlete.age || 22;
+            
+            // Render giải thưởng
+            const awardsHtml = athlete.awards && athlete.awards.length > 0 
+                ? athlete.awards.map(award => `
+                    <div class="award-item award-${award.type}">
+                        <div class="award-icon">
+                            ${award.type === 'gold' ? '🥇' : 
+                              award.type === 'silver' ? '🥈' : 
+                              award.type === 'bronze' ? '🥉' : '🏆'}
+                        </div>
+                        <div class="award-content">
+                            <h4>${award.name}</h4>
+                            <p>${award.competition} • ${award.year || 'N/A'}</p>
+                        </div>
+                    </div>
+                `).join('')
+                : `<div class="award-item">
+                    <div class="award-icon">🏊</div>
+                    <div class="award-content">
+                        <h4>Chưa có giải thưởng</h4>
+                        <p>Thông tin đang được cập nhật</p>
+                    </div>
+                </div>`;
+            
+            // Render lịch sử thi đấu
+            const historyHtml = athlete.competition_history && athlete.competition_history.length > 0
+                ? `
+                <div class="history-table-container">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Thời gian</th>
+                                <th>Giải đấu</th>
+                                <th>Nội dung</th>
+                                <th>Kết quả</th>
+                                <th>Thành tích</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${athlete.competition_history.map(comp => {
+                                const resultNum = comp.result.match(/\d+/);
+                                const resultClass = resultNum ? `result-${resultNum[0]}` : 'result-other';
+                                return `
+                                <tr>
+                                    <td>${comp.time}</td>
+                                    <td><strong>${comp.competition}</strong></td>
+                                    <td>${comp.event}</td>
+                                    <td><span class="result-badge ${resultClass}">${comp.result}</span></td>
+                                    <td>${comp.achievement}</td>
+                                </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                `
+                : `<p>Chưa có thông tin lịch sử thi đấu</p>`;
+            
+            container.innerHTML = `
+                <!-- Header Profile -->
+                <div class="profile-header-card">
+                    <div class="profile-image">
+                        <div class="player-badge">#${athlete.athlete_id}</div>
+                        <img src="${athlete.image_url || 'default.png'}" 
+                             alt="Ảnh ${athlete.full_name}"
+                             onerror="this.src='default.png'">
+                    </div>
+                    
+                    <div class="profile-summary">
+                        <span class="player-nickname-big">"${athlete.nickname || athlete.full_name}"</span>
+                        <h1 class="player-full-name">${athlete.full_name}</h1>
+                        <p class="player-position-detail">${athlete.position || 'Tuyển thủ'} | ${athlete.specialty || 'Bơi lội'}</p>
+                        
+                        <div class="player-stats-quick">
+                            <div class="stat-item">
+                                <i class="fas fa-birthday-cake"></i>
+                                <div>
+                                    <div class="info-label">Ngày sinh</div>
+                                    <div class="info-value">${dob}</div>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <div class="info-label">Quê quán</div>
+                                    <div class="info-value">${athlete.hometown || 'Chưa cập nhật'}</div>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-ruler-vertical"></i>
+                                <div>
+                                    <div class="info-label">Chiều cao</div>
+                                    <div class="info-value">${athlete.height_cm || 'N/A'} cm</div>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-weight"></i>
+                                <div>
+                                    <div class="info-label">Cân nặng</div>
+                                    <div class="info-value">${athlete.weight_kg || 'N/A'} kg</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="contract-status">
+                            <h3><i class="fas fa-file-contract"></i> Thông tin Hợp đồng</h3>
+                            <div class="contract-dates">
+                                <div>
+                                    <div class="info-label">Ngày ký</div>
+                                    <div class="info-value">${athlete.contract_start || '01/01/2023'}</div>
+                                </div>
+                                <div>
+                                    <div class="info-label">Hết hạn</div>
+                                    <div class="info-value">${athlete.contract_end || '31/12/2026'}</div>
+                                </div>
+                            </div>
+                            <div class="status-active">
+                                <i class="fas fa-check-circle"></i> Đang hoạt động
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="main-content-grid">
+                    <!-- Left Column -->
+                    <div class="left-column">
+                        <!-- Personal Info -->
+                        <div class="card">
+                            <h2><i class="fas fa-user-circle"></i> Thông Tin Cá Nhân</h2>
+                            <div class="personal-info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">Họ tên đầy đủ</div>
+                                    <div class="info-value">${athlete.full_name}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Biệt danh</div>
+                                    <div class="info-value">"${athlete.nickname || 'Chưa có'}"</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Ngày sinh</div>
+                                    <div class="info-value">${dob} (${age} tuổi)</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Quê quán</div>
+                                    <div class="info-value">${athlete.hometown || 'Chưa cập nhật'}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Vị trí</div>
+                                    <div class="info-value">${athlete.position || 'N/A'}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Chuyên môn</div>
+                                    <div class="info-value">${athlete.specialty || 'N/A'}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Chiều cao</div>
+                                    <div class="info-value">${athlete.height_cm || 'N/A'} cm</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Cân nặng</div>
+                                    <div class="info-value">${athlete.weight_kg || 'N/A'} kg</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Competition History -->
+                        <div class="card">
+                            <h2><i class="fas fa-history"></i> Lịch Sử Thi Đấu Gần Nhất</h2>
+                            ${historyHtml}
+                        </div>
+                    </div>
+                    
+                    <!-- Right Sidebar -->
+                    <div class="sidebar">
+                        <!-- Awards -->
+                        <div class="sidebar-card">
+                            <h3><i class="fas fa-trophy"></i> Giải Thưởng & Kỷ Lục</h3>
+                            <div class="awards-container">
+                                ${renderAwards(athlete.awards)}
+                            </div>
+                        </div>
+                        
+                        <!-- Description -->
+                        ${athlete.description ? `
+                        <div class="sidebar-card">
+                            <h3><i class="fas fa-info-circle"></i> Giới Thiệu</h3>
+                            <div class="description-box">
+                                ${athlete.description}
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        <!-- Actions -->
+                        <div class="sidebar-card">
+                            <h3><i class="fas fa-cogs"></i> Thao tác</h3>
+                            <div class="action-buttons">
+                                <a href="user.html" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                                </a>
+                                <button class="btn btn-primary" onclick="window.print()">
+                                    <i class="fas fa-print"></i> In thông tin
+                                </button>
+                                <button class="btn btn-secondary" onclick="shareProfile()">
+                                    <i class="fas fa-share-alt"></i> Chia sẻ
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Cập nhật tiêu đề trang
+            document.title = `${athlete.full_name} | HNT Swim Club`;
+        }
+        
+        function shareProfile() {
+            const athleteName = document.querySelector('.player-full-name')?.textContent || 'Tuyển thủ';
+            const url = window.location.href;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: `Thông tin ${athleteName} - HNT Swim Club`,
+                    text: `Xem thông tin chi tiết của ${athleteName}`,
+                    url: url
+                });
+            } else {
+                // Fallback cho desktop
+                navigator.clipboard.writeText(url);
+                alert('Đã sao chép liên kết vào clipboard!');
+            }
+        }
+
+        function renderAwards(awards) {
+    // Kiểm tra dữ liệu đầu vào
+    if (!awards || !Array.isArray(awards)) {
+        return `<div class="award-item award-other">
+            <div class="award-icon">🏊</div>
+            <div class="award-content">
+                <h4>Chưa có dữ liệu giải thưởng</h4>
+                <p>Đang cập nhật thông tin</p>
+            </div>
+        </div>`;
+    }
+    
+    if (awards.length === 0) {
+        return `<div class="award-item award-other">
+            <div class="award-icon">🏊</div>
+            <div class="award-content">
+                <h4>Chưa có giải thưởng</h4>
+                <p>Thông tin đang được cập nhật</p>
+            </div>
+        </div>`;
+    }
+    
+    return awards.map(award => {
+        // Lấy dữ liệu an toàn
+        const type = award.type || award.award_type || 'other';
+        const name = award.name || award.award_name || 'Không có tên';
+        const competition = award.competition || award.competition_name || 'Không có thông tin';
+        const year = award.year || award.year || new Date().getFullYear();
+        
+        // Chọn icon
+        let icon = '🏆';
+        switch(type) {
+            case 'gold': icon = '🥇'; break;
+            case 'silver': icon = '🥈'; break;
+            case 'bronze': icon = '🥉'; break;
+            case 'record': icon = '📊'; break;
+            default: icon = '🏆';
+        }
+        
+        return `
+            <div class="award-item award-${type}">
+                <div class="award-icon">${icon}</div>
+                <div class="award-content">
+                    <h4>${name}</h4>
+                    <p>${competition} • ${year}</p>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+    </script>
+    
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/tuyenthu.js"></script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán - HNT Swim Club</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="thanhtoan.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Thêm Font Awesome cho icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="../sp_home/trangchu.html">HNT Swim Club</a>
+            </div>
+            <nav class="main-nav">
+                <a href="../sp_home/trangchu.html">Trang Chủ</a>
+                <a href="../tuyenthu/user.html">Tuyển Thủ</a>
+                <a href="../sp_home/danhmuc_sp.html">Sản Phẩm</a>
+                <a href="../sk/sukien.html">Sự Kiện</a>
+                <a href="../bao/bao.html">Thông Tin</a>
+            </nav>
+            <div class="user-actions">
+                <a href="../đn/login.html">Đăng Nhập</a>
+                <a href="../nguoidung/nguoidung.html">Hồ Sơ</a>
+                <a href="../giohang/ghtt.html">🛒 Giỏ Hàng</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="checkout-page-container">
+        <h2>Thanh Toán Đơn Hàng</h2>
+        
+        <form id="checkout-form" onsubmit="handlePlaceOrder(event)">
+            <div class="checkout-layout">
+                
+                <div class="col-shipping">
+                    <h3>1. Thông tin giao hàng</h3>
+                    <div class="form-group">
+                        <label>Họ và Tên (*)</label>
+                        <input type="text" id="fullname" required placeholder="Nhập họ tên người nhận">
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại (*)</label>
+                        <input type="tel" id="phone" required placeholder="Nhập số điện thoại">
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ nhận hàng (*)</label>
+                        <input type="text" id="address" required placeholder="Số nhà, đường, phường, quận...">
+                    </div>
+                    <div class="form-group">
+                        <label>Ghi chú đơn hàng</label>
+                        <textarea id="note" rows="3" placeholder="Ví dụ: Giao giờ hành chính..."></textarea>
+                    </div>
+
+                    <h3>2. Phương thức thanh toán</h3>
+                    <div class="payment-methods">
+                        <!-- COD -->
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="cod" checked>
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span class="payment-text">Thanh toán khi nhận hàng (COD)</span>
+                        </label>
+                        
+                        <!-- Ngân hàng -->
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="banking">
+                            <i class="fas fa-university"></i>
+                            <span class="payment-text">Chuyển khoản Ngân hàng</span>
+                        </label>
+                        
+                        <!-- MoMo -->
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="momo">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span class="payment-text">Ví MoMo</span>
+                        </label>
+                    </div>
+
+                    <!-- QR Code Section (Ẩn mặc định) -->
+                    <div id="qr-section" class="qr-section" style="display: none;">
+                        <h3><i class="fas fa-qrcode"></i> Quét mã QR để thanh toán</h3>
+                        
+                        <!-- QR Code cho ngân hàng -->
+                        <div id="bank-qr" class="qr-container" style="display: none;">
+                            <div class="qr-box">
+                                <div class="qr-image">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=HNT_SWIM_CLUB_ORDER_%23HD001_BANK_230000" 
+                                         alt="QR Code Ngân hàng">
+                                </div>
+                                <div class="qr-info">
+                                    <h4>Thông tin chuyển khoản:</h4>
+                                    <p><strong>Ngân hàng:</strong> Vietcombank</p>
+                                    <p><strong>Số tài khoản:</strong> 1234567890</p>
+                                    <p><strong>Chủ tài khoản:</strong> HNT SWIM CLUB</p>
+                                    <p><strong>Số tiền:</strong> <span id="bank-amount">0 VND</span></p>
+                                    <p><strong>Nội dung:</strong> HNT_[Số điện thoại của bạn]</p>
+                                </div>
+                            </div>
+                            <div class="payment-instruction">
+                                <p><i class="fas fa-info-circle"></i> Vui lòng quét mã QR hoặc chuyển khoản theo thông tin trên. 
+                                Đơn hàng sẽ được xác nhận sau 5-10 phút.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- QR Code cho MoMo -->
+                        <div id="momo-qr" class="qr-container" style="display: none;">
+                            <div class="qr-box">
+                                <div class="qr-image">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=HNT_SWIM_CLUB_ORDER_%23HD001_MOMO_230000" 
+                                         alt="QR Code MoMo">
+                                </div>
+                                <div class="qr-info">
+                                    <h4>Thông tin thanh toán MoMo:</h4>
+                                    <p><strong>Số điện thoại:</strong> 0909123456</p>
+                                    <p><strong>Tên:</strong> HNT SWIM CLUB</p>
+                                    <p><strong>Số tiền:</strong> <span id="momo-amount">0 VND</span></p>
+                                    <p><strong>Nội dung:</strong> HNT_[Số điện thoại của bạn]</p>
+                                </div>
+                            </div>
+                            <div class="payment-instruction">
+                                <p><i class="fas fa-info-circle"></i> Mở app MoMo, chọn "Quét mã" hoặc chuyển khoản theo số điện thoại trên. 
+                                Đơn hàng sẽ được xác nhận ngay lập tức.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-summary">
+                    <div class="order-box">
+                        <h3>Đơn hàng của bạn</h3>
+                        <div class="order-items-list" id="order-items-list">
+                            <!-- JavaScript sẽ thêm sản phẩm vào đây -->
+                        </div>
+                        
+                        <div class="order-total-row">
+                            <span>Tạm tính:</span>
+                            <span id="sub-total">0 VND</span>
+                        </div>
+                        <div class="order-total-row">
+                            <span>Phí vận chuyển:</span>
+                            <span id="shipping-fee">30.000 VND</span>
+                        </div>
+                        <div class="order-total-row final">
+                            <span>Tổng cộng:</span>
+                            <span id="final-total">0 VND</span>
+                        </div>
+
+                        <!-- Nút xác nhận sẽ thay đổi text tùy phương thức -->
+                        <button type="submit" class="btn-checkout-submit" id="confirm-btn">
+                            <i class="fas fa-check-circle"></i> XÁC NHẬN ĐẶT HÀNG
+                        </button>
+                        <a href="../giohang/ghtt.html" class="back-to-cart">
+                            <i class="fas fa-arrow-left"></i> Quay lại giỏ hàng
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 HNT Swim Club Official Merchandise. Phát triển bởi Đội ngũ HNT.</p>
+    </footer>
+
+    <script src="../scripts/main.js"></script>
+    <script src="thanhtoan.js"></script>
+</body>
+</html>

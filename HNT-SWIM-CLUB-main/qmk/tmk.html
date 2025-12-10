@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo Mật Khẩu Mới - HNT Swim Club</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .login-container { max-width: 450px; margin: 50px auto; padding: 30px; background: rgba(255,255,255,0.9); border-radius: 10px; }
+        #message { margin-top: 15px; text-align: center; font-weight: bold; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop id="bg-video" style="position:fixed; right:0; bottom:0; min-width:100%; min-height:100%; z-index:-1; object-fit:cover;">
+        <source src="istockphoto-849810160-640_adpp_is.mp4" type="video/mp4">
+    </video>
+
+    <div class="login-container">
+        <h1 class="club-name" style="text-align: center;">HNT SWIM CLUB</h1>
+        <h2 style="text-align: center;">Đặt Lại Mật Khẩu</h2>
+        <p style="text-align: center; color: #666;">Cho tài khoản: <span id="displayEmail" style="font-weight: bold; color: #003366;">...</span></p>
+
+        <form id="resetForm">
+            <div class="input-group">
+                <label>Mật khẩu Mới</label>
+                <div class="input-wrapper" style="display: flex; gap: 10px; align-items: center; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" id="newPass" required placeholder="Tối thiểu 6 ký tự" style="border: none; outline: none; width: 100%;">
+                </div>
+            </div>
+
+            <div class="input-group" style="margin-top: 15px;">
+                <label>Xác nhận Mật khẩu</label>
+                <div class="input-wrapper" style="display: flex; gap: 10px; align-items: center; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" id="confirmPass" required placeholder="Nhập lại mật khẩu" style="border: none; outline: none; width: 100%;">
+                </div>
+            </div>
+
+            <div class="button-group" style="text-align: center; margin-top: 20px;">
+                <button type="submit" id="btnReset" style="padding: 10px 30px; background: #003366; color: white; border: none; border-radius: 5px; cursor: pointer;">Đổi Mật Khẩu</button>
+            </div>
+
+            <div id="message"></div>
+        </form>
+    </div>
+
+  <script>
+    // 1. Lấy email từ bộ nhớ (đã lưu lúc nhập mã OTP thành công)
+    const emailToReset = sessionStorage.getItem('resetEmail');
+    
+    // Nếu không có email (truy cập lậu), đá về trang nhập email
+    if (!emailToReset) {
+        alert('Vui lòng thực hiện bước xác thực trước!');
+        window.location.href = 'qmk.html';
+    } else {
+        document.getElementById('displayEmail').textContent = emailToReset;
+    }
+
+    // Địa chỉ Backend (Giống mấy trang kia)
+    const API_URL = 'http://localhost:3000/api/auth/reset-password';
+
+    document.getElementById('resetForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const newPass = document.getElementById('newPass').value.trim();
+        const confirmPass = document.getElementById('confirmPass').value.trim();
+        const message = document.getElementById('message');
+        const btnReset = document.getElementById('btnReset');
+
+        // Validate cơ bản
+        if (newPass.length < 6) {
+            message.textContent = "Mật khẩu phải từ 6 ký tự trở lên!";
+            message.className = "error";
+            return;
+        }
+
+        if (newPass !== confirmPass) {
+            message.textContent = "Mật khẩu xác nhận không khớp!";
+            message.className = "error";
+            return;
+        }
+
+        // --- GỌI API THẬT NÈ ---
+        try {
+            btnReset.innerText = "Đang cập nhật...";
+            btnReset.disabled = true;
+
+            const response = await fetch(API_URL, {
+                method: 'POST', // Hoặc PUT tùy backend bà viết
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    email: emailToReset, 
+                    newPassword: newPass 
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Thành công -> Báo xanh
+                message.textContent = "✅ Đổi mật khẩu thành công! Đang chuyển hướng...";
+                message.className = "success";
+                
+                // Xóa session cho sạch
+                sessionStorage.removeItem('resetEmail');
+
+                // Chuyển về đăng nhập sau 2 giây
+                setTimeout(() => {
+                    window.location.href = '../đn/login.html';
+                }, 2000);
+            } else {
+                // Lỗi từ server (VD: Email ko tồn tại) -> Báo đỏ
+                message.textContent = data.message || "Lỗi cập nhật mật khẩu.";
+                message.className = "error";
+                btnReset.disabled = false;
+                btnReset.innerText = "Đổi Mật Khẩu";
+            }
+
+        } catch (error) {
+            console.error(error);
+            message.textContent = "Lỗi kết nối server!";
+            message.className = "error";
+            btnReset.disabled = false;
+            btnReset.innerText = "Đổi Mật Khẩu";
+        }
+    });
+</script>
+</body>
+</html>

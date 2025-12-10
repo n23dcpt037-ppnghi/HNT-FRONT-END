@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Thêm Sự Kiện Mới</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body class="admin-body">
+
+    <header class="admin-header">
+        <div id="admin-header-container"></div>
+    </header>
+
+    <div class="admin-container form-page">
+        <h1 class="admin-title">➕ Thêm Sự Kiện Mới</h1>
+        <p class="form-instruction">Vui lòng nhập đầy đủ thông tin chi tiết của sự kiện.</p>
+        
+        <form id="add-event-form">  <!-- ĐỔI TỪ add-product-form -->
+    
+    <fieldset class="form-section">
+        <legend>I. Thông Tin Cơ Bản</legend>
+        <div class="form-row">
+            <div class="form-group half">
+                <label for="event-id">Mã Sự Kiện (*)</label>  <!-- ĐỔI ID -->
+                <input type="text" id="event-id" placeholder="Ví dụ: SK004">
+            </div>
+            <div class="form-group half">
+                <label for="event-title">Tên Sự Kiện (*)</label>  <!-- ĐỔI ID -->
+                <input type="text" id="event-title" placeholder="Nhập tên của sự kiện.">
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group half">
+                <label for="location">Địa Điểm (*)</label>  <!-- ĐỔI ID -->
+                <input type="text" id="location" placeholder="Nhập địa điểm diễn ra sự kiện.">
+            </div>
+            <div class="form-group half">
+                <label for="event-time">Thời Gian</label>  <!-- THÊM TRƯỜNG THỜI GIAN -->
+                <input type="time" id="event-time">
+            </div>
+        </div>
+
+        <div class="form-row">
+           <div class="form-group">
+                <label for="event-date">Ngày Diễn Ra (*)</label>  <!-- ĐỔI ID -->
+                <input type="date" id="event-date">
+            </div>
+            <div class="form-group half">
+                <label for="image-upload">Ảnh Bìa (*)</label>
+                <input type="file" id="image-upload" accept="image/*">
+                <p class="note">Chọn tệp không quá 2MB</p>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="form-section">
+        <legend>II. Nội Dung Sự Kiện</legend>
+        <div class="form-group full">
+            <label for="description">Mô tả sự kiện</label>  <!-- ĐỔI ID -->
+            <textarea id="description" rows="5"></textarea>
+        </div>
+    </fieldset>	
+    
+    <div class="form-actions">
+        <button type="submit" class="btn-save">Lưu Sự Kiện</button>
+        <button type="button" class="btn-cancel" onclick="window.location.href='adminsk.html'">Hủy</button>
+    </div>
+</form>
+	</div>
+<footer class="main-footer admin-footer">
+        <p>&copy; 2024 HNT Swim Club Official Merchandise. Phát triển bởi Đội ngũ HNT.</p>
+    </footer>
+  <script src="../scripts/sukien.js"></script>
+     <script src="../scripts/admin-header.js"></script>
+</body>
+</html>

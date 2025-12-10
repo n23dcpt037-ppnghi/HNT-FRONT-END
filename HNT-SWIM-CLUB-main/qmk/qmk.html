@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quên Mật Khẩu - HNT Swim Club</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+      /* CSS thêm để ẩn hiện các bước */
+      .hidden { display: none; }
+      .login-container { max-width: 450px; margin: 50px auto; padding: 30px; background: rgba(255,255,255,0.9); border-radius: 10px; }
+      #message { margin-top: 15px; text-align: center; font-weight: bold; }
+      .success { color: green; }
+      .error { color: red; }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop id="bg-video" style="position:fixed; right:0; bottom:0; min-width:100%; min-height:100%; z-index:-1; object-fit:cover;">
+    <source src="istockphoto-849810160-640_adpp_is.mp4" type="video/mp4">
+  </video>
+
+  <div class="login-container">
+    <h1 class="club-name" style="text-align: center;">HNT SWIM CLUB</h1>
+    <h2 style="text-align: center;">Quên Mật Khẩu</h2>
+
+    <form id="forgotForm">
+      <div id="step1">
+          <div class="input-group">
+            <label>Email đăng ký</label>
+            <div class="input-wrapper" style="display: flex; gap: 10px; align-items: center; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+              <i class="fa fa-envelope"></i>
+              <input type="email" id="email" required placeholder="Nhập email của bạn" style="border: none; outline: none; width: 100%;">
+            </div>
+          </div>
+          <div class="button-group" style="text-align: center; margin-top: 20px;">
+            <button type="button" id="btnSendCode" style="padding: 10px 30px; background: #003366; color: white; border: none; border-radius: 5px; cursor: pointer;">Gửi Mã Xác Nhận</button>
+          </div>
+      </div>
+
+      <div id="step2" class="hidden">
+          <p style="text-align: center; font-size: 0.9em; color: green;">Mã xác nhận đã được gửi! (Check alert)</p>
+          <div class="input-group">
+            <label>Mã Xác Nhận</label>
+            <div class="input-wrapper" style="display: flex; gap: 10px; align-items: center; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+              <i class="fa fa-key"></i>
+              <input type="text" id="otpCode" placeholder="Nhập mã 6 số" style="border: none; outline: none; width: 100%;">
+            </div>
+          </div>
+          <div class="button-group" style="text-align: center; margin-top: 20px;">
+            <button type="submit" id="btnVerify" style="padding: 10px 30px; background: #d32f2f; color: white; border: none; border-radius: 5px; cursor: pointer;">Xác Nhận</button>
+          </div>
+      </div>
+
+      <div class="links" style="text-align: center; margin-top: 20px;">
+        <a href="../đn/login.html">Quay lại Đăng nhập</a>
+      </div>
+      
+      <div id="message"></div>
+    </form>
+  </div>
+
+  <script>
+      // SCRIPT XỬ LÝ GIẢ LẬP GỬI MÃ
+      const MOCK_OTP = "123456"; // Mã giả định
+      let userEmail = "";
+
+      // 1. Xử lý nút Gửi Mã
+      document.getElementById('btnSendCode').addEventListener('click', function() {
+          const emailInput = document.getElementById('email').value;
+          const message = document.getElementById('message');
+
+          if(!emailInput || !emailInput.includes('@')) {
+              message.textContent = "Vui lòng nhập Email hợp lệ!";
+              message.className = "error";
+              return;
+          }
+
+          // Giả lập gửi thành công
+          userEmail = emailInput;
+          message.textContent = "";
+          
+          // Hiển thị mã cho người dùng thấy (Simulation)
+          alert(`[GIẢ LẬP SERVER] Mã xác nhận của bạn là: ${MOCK_OTP}`);
+
+          // Chuyển giao diện sang bước 2
+          document.getElementById('step1').classList.add('hidden');
+          document.getElementById('step2').classList.remove('hidden');
+      });
+
+      // 2. Xử lý nút Xác Nhận Mã
+      document.getElementById('forgotForm').addEventListener('submit', function(e) {
+          e.preventDefault();
+          const codeInput = document.getElementById('otpCode').value;
+          const message = document.getElementById('message');
+
+          if(codeInput === MOCK_OTP) {
+              // Mã đúng -> Lưu email tạm vào sessionStorage để qua trang kia biết đổi pass cho ai
+              sessionStorage.setItem('resetEmail', userEmail);
+              
+              message.textContent = "Mã chính xác! Đang chuyển hướng...";
+              message.className = "success";
+              
+              // CHUYỂN TRANG Ở ĐÂY NÈ BÀ
+              setTimeout(() => {
+                  window.location.href = 'tmk.html'; 
+              }, 1000);
+          } else {
+              message.textContent = "Mã xác nhận không đúng!";
+              message.className = "error";
+          }
+      });
+  </script>
+</body>
+</html>

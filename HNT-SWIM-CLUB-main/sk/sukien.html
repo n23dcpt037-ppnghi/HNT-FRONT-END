@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sự Kiện - HNT Swim Club</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* HEADER - GIỐNG TRANG CHỦ */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background: rgba(0, 51, 102, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border-bottom: 3px solid #ffc300;
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: 800;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-menu a, .user-actions a {
+    color: white;
+    margin-left: 25px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.nav-menu a:hover, 
+.nav-menu a.active-page,
+.user-actions a:hover {
+    background: rgba(255, 195, 0, 0.2);
+    color: #ffc300;
+}
+main {
+    padding-top: 60px; /* Tăng padding để không bị header che */
+    min-height: calc(100vh - 300px);
+}
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 25px 0 40px 0;
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            margin: 40px 0 25px 0;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #3498db;
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+        }
+        
+        .section-title i {
+            margin-right: 12px;
+            color: #3498db;
+            font-size: 22px;
+        }
+        
+        .events-hero {
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .events-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
+        }
+        
+        .events-hero h1,
+        .events-hero p {
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.9);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .events-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .events-hero p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .events-list-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        .section-divider {
+            margin: 50px 0;
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3498db, transparent);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">HNT Swim Club</div>
+        <nav class="nav-menu">
+            <a href="../sp_home/trangchu.html">Trang Chủ</a>
+            <a href="../tuyenthu/user.html">Tuyển Thủ</a>
+            <a href="../sp_home/danhmuc_sp.html">Sản Phẩm</a>
+            <a href="sukien.html" class="active-page">Sự Kiện</a>
+            <a href="../bao/bao.html">Thông Tin</a>
+        </nav>
+        <div class="user-actions">
+            <a href="../đn/login.html">Đăng Nhập</a>
+            <a href="../nguoidung/nguoidung.html">Hồ sơ</a>
+            <a href="../giohang/ghtt.html">🛒 Giỏ Hàng</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="events-hero" id="eventBanner">
+            <div class="banner-content">
+                <h1>Sự Kiện Nổi Bật Của HNT</h1>
+                <p>Cập nhật các giải đấu, buổi tập huấn và hoạt động cộng đồng của Câu lạc bộ.</p>
+            </div>
+        </section>
+
+        <section class="events-list-container">
+            <h2 class="section-title">
+                <i class="fas fa-calendar-check"></i> Sự Kiện Sắp Diễn Ra
+                <span id="upcoming-count" class="event-count">0</span>
+            </h2>
+            <div id="upcoming-events" class="events-grid">
+                <div class="loading-message">Đang tải sự kiện...</div>
+            </div>
+            
+            <hr class="section-divider">
+
+            <h2 class="section-title">
+                <i class="fas fa-history"></i> Sự Kiện Đã Diễn Ra
+                <span id="past-count" class="event-count">0</span>
+            </h2>
+            <div id="past-events" class="events-grid">
+                <div class="loading-message">Đang tải sự kiện...</div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 HNT Swim Club Official Merchandise. Phát triển bởi Đội ngũ HNT.</p>
+    </footer>
+
+    <script src="../scripts/event.js"></script>
+    <script src="../scripts/main.js"></script>
+</body>
+</html>

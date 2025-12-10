@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tin Tức | HNT Swim Club</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* RESET & BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        /* HEADER - GIỐNG TRANG CHỦ */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(0, 51, 102, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #ffc300;
+        }
+        
+        .logo {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .nav-menu a, .user-actions a {
+            color: white;
+            margin-left: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-menu a:hover, 
+        .nav-menu a.active-page,
+        .user-actions a:hover {
+            background: rgba(255, 195, 0, 0.2);
+            color: #ffc300;
+        }
+        
+        /* MAIN CONTENT - CĂN CHỈNH PADDING ĐỂ KHÔNG BỊ CHE */
+        main {
+            padding-top: 60px; /* Tăng padding để không bị header che */
+            min-height: calc(100vh - 300px);
+        }
+        
+        /* HERO SECTION - GIỐNG TRANG CHỦ */
+        .page-hero {
+            text-align: center;
+    padding: 80px 5% 60px;
+    background: linear-gradient(135deg, #003366 0%, #0056b3 100%);
+    background-size: cover; /* THÊM DÒNG NÀY ĐỂ PHỦ ĐẦY KHÔNG GIAN */
+    color: white;
+    border-radius: 0;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    
+        }
+        
+        .page-hero:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 195, 0, 0.1) 0%, transparent 70%);
+        }
+        
+        .page-hero h2 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+        
+        .page-hero h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 8px;
+            background: linear-gradient(90deg, #ffc300, white, #ffc300);
+            border-radius: 4px;
+        }
+        
+        .page-hero p {
+             font-size: 1.5rem;
+    max-width: 800px;
+    margin: 30px auto 0;
+    line-height: 1.6;
+    opacity: 1; 
+    position: relative;
+    z-index: 2;
+    font-weight: 400; 
+    color: white; 
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* FILTER SECTION */
+        .filters {
+            padding: 30px 5%;
+            background: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .filters label {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #003366;
+        }
+        
+        #category-filter {
+            padding: 12px 25px;
+            border-radius: 25px;
+            border: 2px solid #003366;
+            background: white;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #003366;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+        
+        #category-filter:hover {
+            background: #003366;
+            color: white;
+        }
+        
+        /* ARTICLE GRID - GIỐNG TRANG CHỦ */
+        .article-grid {
+           display: grid;
+    grid-template-columns: repeat(3, 1fr); /* SỬA: Hiển thị 3 cột */
+    gap: 30px; /* Giảm gap xuống 30px */
+    max-width: 1300px; /* Tăng max-width */
+    margin: 0 auto;
+    padding: 0 5% 60px;
+        }
+        
+        /* ARTICLE CARD - GIỐNG CARD TRANG CHỦ */
+        .article-card {
+            background: white;
+    border-radius: 20px; /* Giảm border-radius */
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 51, 102, 0.1);
+    transition: all 0.3s ease; /* Giảm thời gian transition */
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+        }
+        
+        .article-card:hover {
+             transform: translateY(-8px); /* Giảm độ nâng */
+    box-shadow: 0 20px 40px rgba(0, 51, 102, 0.15);
+        }
+        
+        .article-card img {
+            width: 100%;
+    height: 200px; /* Giảm chiều cao ảnh */
+    object-fit: cover;
+    transition: transform 0.4s ease;
+        }
+        
+        .article-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .card-content {
+            padding: 30px;
+            position: relative;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* CATEGORY TAG - ĐẸP HƠN */
+        .category-tag {
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 0.85em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            align-self: flex-start;
+            color: white;
+        }
+        
+        .category-tag.tournament {
+            background: #1976d2;
+        }
+        
+        .category-tag.interview {
+            background: #7b1fa2;
+        }
+        
+        .category-tag.profile {
+            background: #388e3c;
+        }
+        
+        .category-tag.award {
+            background: #f57c00;
+        }
+        
+        .card-content h3 {
+            font-size: 1.6rem;
+            color: #003366;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            flex-grow: 1;
+        }
+        
+        .card-content p {
+            color: #555;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+        
+        /* READ MORE LINK - GIỐNG BUTTON TRANG CHỦ */
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #003366;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: 2px solid #003366;
+            margin-top: auto;
+        }
+        
+        .read-more:hover {
+            background: transparent;
+            color: #003366;
+            gap: 15px;
+        }
+        
+        /* ARTICLE META */
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            margin-top: 20px;
+        }
+        
+        .article-meta span {
+            color: #666;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .article-meta i {
+            color: #ffc300;
+        }
+        
+        /* LOADING STATE */
+        .loading {
+            text-align: center;
+            padding: 80px;
+            grid-column: 1/-1;
+        }
+        
+        .spinner {
+            border: 5px solid rgba(0, 51, 102, 0.1);
+            border-top: 5px solid #ffc300;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* NO ARTICLES STATE */
+        .no-articles {
+            text-align: center;
+            padding: 80px;
+            grid-column: 1/-1;
+        }
+        
+        .no-articles i {
+            font-size: 4rem;
+            color: #ccc;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        /* FOOTER - GIỐNG TRANG CHỦ */
+        footer {
+            background: #003366;
+            color: white;
+            padding: 60px 5%;
+            text-align: center;
+            border-top: 5px solid #ffc300;
+        }
+        
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        footer p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .nav-menu {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin: 15px 0;
+            }
+            
+            .nav-menu a {
+                margin: 5px;
+                font-size: 0.9rem;
+            }
+            
+            .user-actions {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .user-actions a {
+                margin: 5px;
+                font-size: 0.9rem;
+            }
+            
+            main {
+                padding-top: 160px;
+            }
+            
+            .page-hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .page-hero p {
+                font-size: 1.2rem;
+            }
+            
+            .filters {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .article-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 0 20px 40px;
+            }
+            
+            .article-card {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER - GIỐNG TRANG CHỦ -->
+    <header class="header">
+        <div class="logo">HNT Swim Club</div>
+        <nav class="nav-menu">
+            <a href="../sp_home/trangchu.html">Trang Chủ</a>
+            <a href="../tuyenthu/user.html">Tuyển Thủ</a>
+            <a href="../sp_home/danhmuc_sp.html">Sản Phẩm</a>
+            <a href="../sk/sukien.html">Sự Kiện</a>
+            <a href="bao.html" class="active-page">Thông Tin</a>
+        </nav>
+        <div class="user-actions">
+            <a href="../đn/login.html">Đăng Nhập</a>
+            <a href="../nguoidung/nguoidung.html">Hồ sơ</a>
+            <a href="../giohang/ghtt.html">🛒 Giỏ Hàng</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO SECTION - GIỐNG TRANG CHỦ -->
+        <section class="page-hero">
+            <h2>📰 Tin Tức & Bài Báo Nổi Bật</h2>
+            <p>Tổng hợp các bài phỏng vấn, giới thiệu vận động viên, thành tích giải đấu và các sự kiện đáng chú ý.</p>
+        </section>
+
+        <!-- FILTER SECTION -->
+        <section class="filters">
+            <label for="category-filter">Lọc theo:</label>
+            <select id="category-filter">
+                <option value="all">Tất cả</option>
+                <option value="tournament">Giải Đấu</option>
+                <option value="interview">Phỏng Vấn</option>
+                <option value="profile">Giới Thiệu</option>
+                <option value="award">Giải Thưởng</option>
+            </select>
+        </section>
+
+        <!-- ARTICLE GRID -->
+        <section class="article-grid" id="article-list">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p style="color: #003366; font-size: 1.2rem; font-weight: 600;">Đang tải bài viết...</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER - GIỐNG TRANG CHỦ -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 HNT Swim Club Official Merchandise. Phát triển bởi Đội ngũ HNT.</p>
+        </div>
+    </footer>
+
+    <!-- GIỮ NGUYÊN SCRIPT NEWS.JS -->
+    <script src="../scripts/news.js"></script>
+    <script src="../scripts/main.js"></script>
+</body>
+</html>

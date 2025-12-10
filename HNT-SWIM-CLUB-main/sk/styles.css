@@ -1,0 +1,194 @@
+/* Thiết lập chung */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6; /* Nền nhẹ */
+    color: #333;
+}
+
+/* Ẩn dấu chấm tròn của danh sách */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* --- HEADER --- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background-color: #003366; /* Dùng màu HNT chính */
+    color: #ffffff;
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.nav-menu a, .user-actions a {
+	font-size: 1.1em;
+    color: #ffffff;
+    margin-left: 25px;
+    font-weight: 600;
+    padding: 5px 0;
+}
+
+.nav-menu a:hover, 
+.nav-menu a.active-page,
+.user-actions a:hover {
+    color: #ffc300;
+}
+
+/* --- Cập nhật Phần Hero Sự Kiện để chuẩn bị cho Slider (Vị trí 1) --- */
+.events-hero {
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+    margin-bottom: 40px;
+    
+    position: relative; 
+    overflow: hidden;
+    
+    /* QUAN TRỌNG: Thêm hiệu ứng chuyển đổi mượt mà */
+    transition: background-image 1s ease-in-out, background-color 1s ease-in-out;
+    /* Thiết lập background-color ban đầu để tạo lớp nền phụ */
+    background-color: #0c3e6b; /* Màu xanh đậm ban đầu */
+    
+    /* Các thuộc tính để ảnh nền hiển thị đúng (JS sẽ thiết lập) */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Tạo lớp phủ (Overlay) Vĩnh viễn bằng Pseudo-element (Vị trí 2) */
+.events-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* MÀU ĐEN MỜ: Dễ đọc chữ trên ảnh sáng hơn */
+    background-color: rgba(0, 0, 0, 0.4); 
+    z-index: 1; 
+}
+
+/* Đảm bảo chữ nằm trên lớp phủ (Vị trí 3) */
+.events-hero h1, .events-hero p {
+    position: relative; 
+    z-index: 2; 
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Danh sách Sự Kiện */
+.events-list-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+}
+
+.section-title {
+    font-size: 2em;
+    color: #0c3e6b;
+    border-bottom: 3px solid #17a2b8;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    margin-top: 40px;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* Thẻ Sự Kiện (Event Card) */
+.event-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.event-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.event-info {
+    padding: 20px;
+}
+
+.event-info h3 {
+    color: #0c3e6b;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.event-info p {
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+.event-info .date, .event-info .location {
+    font-weight: bold;
+    color: #17a2b8; /* Màu xanh ngọc cho thông tin quan trọng */
+}
+
+.upcoming-event {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #e8491d; /* Màu cam nổi bật cho CTA */
+    color: white;
+	border-radius: 4px;
+    font-size: 0.8em;
+    text-align: center;
+    font-weight: bold;
+	margin-top: 10px;
+}
+
+.past-event-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #ccc;
+    color: #333;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Footer */
+.main-footer {
+    background-color: #0c3e6b;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 0.9em;
+}
+
+/* Dấu phân cách */
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #17a2b8, rgba(0, 0, 0, 0));
+    margin: 40px 0;
+}

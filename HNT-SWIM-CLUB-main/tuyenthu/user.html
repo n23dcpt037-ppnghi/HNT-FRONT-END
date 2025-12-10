@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đội Hình Tuyển Thủ - HNT Swim Club</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <a href="../sp_home/trangchu.html">HNT Swim Club</a> 
+        </div>
+        <nav class="nav-menu">
+            <a href="../sp_home/trangchu.html">Trang Chủ</a>
+            <a href="user.html" class="active-page">Tuyển Thủ</a>
+            <a href="../sp_home/danhmuc_sp.html">Sản Phẩm</a>
+            <a href="../sk/sukien.html">Sự Kiện</a>
+            <a href="../bao/bao.html">Thông Tin</a>
+        </nav>
+        <div class="user-actions">
+            <a href="../đn/login.html">Đăng Nhập</a>
+            <a href="../nguoidung/nguoidung.html">Hồ Sơ</a>
+            <a href="../giohang/ghtt.html">🛒 Giỏ Hàng</a>
+        </div>
+    </header>
+
+    <div class="squad-container">
+        <h1 class="squad-title">🏊 Đội Hình Tuyển Thủ HNT Swim Club</h1>
+        
+        <div class="squad-grid" id="players-container">
+            <!-- Nội dung sẽ được tải động từ API -->
+            <div class="loading-message">
+                Đang tải dữ liệu tuyển thủ...
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 HNT Swim Club Official Merchandise. Phát triển bởi Đội ngũ HNT.</p>
+    </footer>
+
+    <script>
+      <div id="players-container" class="squad-grid">
+    <!-- Nội dung sẽ được tải động từ API -->
+    <div class="loading-message">
+        Đang tải dữ liệu tuyển thủ...
+    </div>
+</div>
+    </script>
+
+    <style>
+        .loading-message, .no-data, .error-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #666;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+        }
+
+        
+    </style>
+
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/tuyenthu.js"></script>
+
+</body>
+</html>

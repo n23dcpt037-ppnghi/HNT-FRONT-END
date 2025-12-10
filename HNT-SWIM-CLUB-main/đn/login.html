@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập - HNT Swim Club</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- THÊM GOOGLE IDENTITY SERVICES -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  
+  <style>
+    /* Các style cũ giữ nguyên... */
+    #message {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    #message.success { color: green; }
+    #message.error { color: red; }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+    }
+    .button-group button {
+      padding: 10px 40px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+      background-color: #007bff;
+      color: #fff;
+      transition: background 0.3s;
+    }
+    .button-group button:hover {
+      background-color: #0056b3;
+    }
+
+    .social-login {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    /* SỬA NÚT GOOGLE - QUAN TRỌNG */
+    .social-login .google-btn {
+      flex: 1 1 120px;
+      max-width: 150px;
+      min-width: 110px;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #db4437;
+      transition: opacity 0.2s, transform 0.08s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+    }
+    
+    .social-login .google-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+      background-color: #c23321;
+    }
+    
+    .facebook-btn { background-color: #1877f2; }
+    .twitter-btn { background-color: #1DA1F2; }
+    
+    .social-login i { margin-right: 0; }
+
+    .links {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .links a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .links a:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+
+    .login-container {
+      max-width: 420px;
+      margin: 40px auto;
+      padding: 20px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+    .input-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .input-wrapper input {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    h1.club-name { text-align:center; margin-bottom: 6px; }
+    h2 { text-align:center; font-weight: 600; margin-bottom: 12px; }
+    
+    /* XÓA DIV GOOGLE ẨN GÂY LỖI */
+    .google-signin-wrapper {
+      display: none;
+    }
+    
+    /* Loading state */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop id="bg-video" style="position:fixed; right:0; bottom:0; min-width:100%; min-height:100%; z-index:-1; object-fit:cover;">
+    <source src="istockphoto-849810160-640_adpp_is.mp4" type="video/mp4">
+  </video>
+
+  <div class="login-container">
+    <h1 class="club-name"> HNT SWIM CLUB</h1>
+    <h2>Đăng nhập tài khoản</h2>
+
+    <form id="loginForm">
+      <div class="input-group">
+        <label for="username">Tên đăng nhập</label>
+        <div class="input-wrapper">
+          <i class="fa fa-user"></i>
+          <input type="text" id="username" name="username" placeholder="Nhập tên đăng nhập" autocomplete="username">
+        </div>
+      </div>
+
+      <div class="input-group" style="margin-top:10px;">
+        <label for="password">Mật khẩu</label>
+        <div class="input-wrapper">
+          <i class="fa fa-lock"></i>
+          <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" autocomplete="current-password">
+        </div>
+      </div>
+
+      <div class="remember-me" style="margin-top:10px;">
+        <input type="checkbox" id="remember">
+        <label for="remember">Ghi nhớ đăng nhập</label>
+      </div>
+
+      <!-- Nút đăng nhập -->
+      <div class="button-group">
+        <button type="submit" id="loginBtn">Đăng nhập</button>
+      </div>
+
+      <!-- Social login (Google) -->
+      <div class="social-login" aria-label="Social login buttons">
+        
+        <div style="position: relative; flex: 1; max-width: 150px;">
+    <button type="button" class="google-btn" id="googleLoginBtn" style="width: 100%;">
+      <i class="fab fa-google"></i><span>Google</span>
+    </button>
+    
+    <div id="g_id_onload"
+         data-client_id="743463530055-mj250brgvsham3s837e1rp13tcnia1k9.apps.googleusercontent.com" 
+         data-callback="handleCredentialResponse"
+         data-auto_prompt="false"
+         data-context="signin">
+    </div>
+    
+    <div class="g_id_signin"
+         data-type="icon"
+         data-shape="circle"
+         data-theme="outline"
+         data-text="signin_with"
+         data-size="large"
+         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.01; cursor: pointer; overflow: hidden;">
+    </div>
+</div>
+        
+        <!-- Hoặc có thể dùng cách này nếu muốn Google One Tap -->
+        <div class="google-signin-wrapper">
+          <div id="g_id_onload"
+               data-client_id="743463530055-mj250brgvsham3s837e1rp13tcnia1k9.apps.googleusercontent.com" 
+               data-callback="handleCredentialResponse"
+               data-auto_prompt="false">
+          </div>
+          <div class="g_id_signin"
+               data-type="standard"
+               data-theme="filled_blue"
+               data-text="signin_with"
+               data-size="medium"
+               data-logo_alignment="left">
+          </div>
+        </div>
+      </div>
+
+      <!-- Links -->
+      <div class="links">
+        <a href="../qmk/qmk.html" id="forgotLink">Quên mật khẩu?</a> | 
+        <a href="../đk/đk.html" id="registerLink">Đăng ký</a>
+      </div>
+      
+      <div id="message"></div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="../scripts/FormLogin.js"></script>
+</body>
+</html>

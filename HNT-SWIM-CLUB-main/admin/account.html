@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Tài Khoản - HNT Admin Panel</title>
+	<link rel="stylesheet" href="styles.css"> 
+    <style>
+        /* CSS Nội Tuyến Cơ Bản (Tái sử dụng từ trang trước) */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+
+        .header {
+            background-color: #002d5e;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .nav-bar {
+            background-color: #004a99;
+            padding: 10px 30px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        /* Style cho nút Admin Account */
+        .header .admin-account {
+            color: #ffe08a; /* Màu vàng nhạt để nổi bật */
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px 10px;
+            border: 1px solid #ffe08a;
+            border-radius: 4px;
+        }
+        
+        .nav-bar a:hover {
+            background-color: #002d5e;
+        }
+
+        .container {
+            padding: 30px;
+            max-width: 900px; /* Giới hạn chiều rộng cho nội dung chính */
+            margin: auto;
+        }
+
+        .section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+        }
+
+        .section h2 {
+            color: #004a99;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-size: 22px;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Quan trọng để padding không làm tăng chiều rộng */
+        }
+
+        .button-primary {
+            background-color: #004a99;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .button-primary:hover {
+            background-color: #002d5e;
+        }
+
+        /* Profile Info Styling */
+        .profile-info p {
+            padding: 8px 0;
+            border-bottom: 1px dotted #eee;
+        }
+
+        .profile-info span {
+            font-weight: normal;
+            float: right;
+            color: #333;
+        }
+        
+        /* Logout Button Style */
+        .logout-section {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+     <header class="admin-header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="#">HNT Admin Panel</a>
+            </div>
+            <nav class="admin-nav">
+                <a href="admin.html">Tuyển Thủ</a>
+                <a href="adminsp.html">Sản Phẩm</a>
+                <a href="admindonhang.html">Đơn Hàng</a>
+				<a href="adminbao.html">Thông Tin</a>
+				<a href="adminsk.html">Sự Kiện</a>
+            </nav>
+            <div class="user-actions">
+                <a href="account.html">Admin Account</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>⚙️ Quản Lý Tài Khoản</h1>
+        
+        <div class="section">
+            <h2>Thông Tin Admin</h2>
+            <div class="profile-info">
+                <p>
+                    Tên người dùng: 
+                    <span>Admin HNT Club</span>
+                </p>
+                <p>
+                    Email: 
+                    <span>admin@hntswim.com</span>
+                </p>
+                <p>
+                    Vai trò: 
+                    <span style="color: green; font-weight: bold;">Quản trị viên cấp cao</span>
+                </p>
+                <p>
+                    Ngày tham gia: 
+                    <span>10/01/2022</span>
+                </p>
+            </div>
+            <button class="button-primary" style="margin-top: 20px;">Cập Nhật Thông Tin</button>
+        </div>
+
+        <div class="section">
+            <h2>Đổi Mật Khẩu</h2>
+            <form>
+                <div class="form-group">
+                    <label for="old_password">Mật khẩu cũ</label>
+                    <input type="password" id="old_password" name="old_password" required>
+                </div>
+                <div class="form-group">
+                    <label for="new_password">Mật khẩu mới</label>
+                    <input type="password" id="new_password" name="new_password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Xác nhận mật khẩu mới</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                </div>
+                <button type="submit" class="button-primary">Lưu Mật Khẩu Mới</button>
+            </form>
+        </div>
+        
+        <div class="section logout-section">
+            <button class="button-primary" style="background-color: #dc3545;">Đăng Xuất</button>
+        </div>
+    </div>
+
+    <footer class="main-footer admin-footer">
+        <p>&copy; 2024 HNT Swim Club Official Merchandise. Phát triển bởi Đội ngũ HNT.</p>
+    </footer>
+
+</body>
+</html>

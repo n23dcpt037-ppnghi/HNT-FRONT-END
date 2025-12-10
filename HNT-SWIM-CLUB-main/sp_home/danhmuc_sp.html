@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh mục Sản phẩm - HNT Swim Club</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+</head>
+<style>
+    body {
+    padding-top: 50px; /* Đẩy nội dung xuống dưới header fixed */
+}
+
+main {
+    padding-top: 20px; /* Thêm nếu có thẻ main */
+}
+</style>
+<body>
+
+    <header class="header">
+        <div class="logo">HNT SWIM CLUB</div>
+        <nav class="nav-menu">
+            <a href="trangchu.html">Trang Chủ</a>
+            <a href="../tuyenthu/user.html">Tuyển Thủ</a>
+            <a href="danhmuc_sp.html" class="active-page">Sản Phẩm</a>
+			<a href="../sk/sukien.html">Sự Kiện</a>
+			<a href="../bao/bao.html">Thông Tin</a>
+        </nav>
+        <div class="user-actions">
+            <a href="../đn/login.html">Đăng Nhập</a>
+			<a href="../nguoidung/nguoidung.html">Hồ sơ</a>
+            <a href="../giohang/ghtt.html">🛒 Giỏ Hàng</a>
+        </div>
+    </header>
+
+    <div class="category-page-container">
+        
+        <aside class="sidebar-filter">
+            <h3>Lọc Sản Phẩm</h3>
+
+            <div class="filter-group">
+                <h4>Loại Sản Phẩm</h4>
+                <label><input type="checkbox" name="type" value="Áo"> Áo </label>
+                <label><input type="checkbox" name="type" value="Mũ"> Mũ & Nón Bơi</label>
+                <label><input type="checkbox" name="type" value="Khăn"> Khăn Tắm</label>
+                <label><input type="checkbox" name="type" value="Bình Nước"> Bình Nước</label>
+                <label><input type="checkbox" name="type" value="Khác"> Phụ kiện</label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Khoảng Giá</h4>
+                <input type="range" min="50000" max="1000000" step="50000" value="1000000">
+                <p>Giá: Dưới 1.000.000 VNĐ</p>
+            </div>
+            
+            <button class="btn-secondary full-width">Áp Dụng Lọc</button>
+        </aside>
+
+        <main class="product-listing">
+            <h2>Tất cả Sản Phẩm Chính Thức</h2>
+            
+            <div class="sort-bar">
+                <span id="result-count">Đang tải sản phẩm...</span>
+                <select id="sort-select">
+                    <option value="default">Sắp xếp Mặc định</option>
+                    <option value="price-asc">Giá: Thấp đến Cao</option>
+                    <option value="price-desc">Giá: Cao đến Thấp</option>
+                    <option value="newest">Mới nhất</option>
+                </select>
+            </div>
+
+            <!--  thêm ID -->
+            <div class="product-grid" id="product-list-container">
+                <!-- JavaScript sẽ tự động điền các ô sản phẩm vào đây -->
+                <p style="width: 100%; text-align: center;">Đang kết nối đến máy chủ...</p>
+            </div>
+            
+            <div class="pagination">
+                <a href="#">&laquo; Trước</a>
+                <a href="danhmuc_sp.html" class="active">1</a>
+                <a href="#">Sau &raquo;</a>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 HNT Swim Club Official Merchandise. Phát triển bởi Đội ngũ HNT.</p>
+    </footer>
+
+    <!-- Kết nối file JS -->
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/product.js"></script>
+</body>
+</html>

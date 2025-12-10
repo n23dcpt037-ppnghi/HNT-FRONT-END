@@ -1,0 +1,288 @@
+:root {
+    --primary-color: #003366;
+    --secondary-color: #0056b3;
+    --light-color: #ffffff;
+    --dark-text: #333;
+    --border-color: #ddd;
+    --bg-light: #f9f9f9;
+    --red-alert: #dc3545;
+    --color-primary: #003366;
+    --color-white: #ffffff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Open Sans', Arial, sans-serif; color: var(--dark-text); background-color: var(--light-color); }
+a { text-decoration: none; color: inherit; }
+
+/* --- HEADER & FOOTER --- */
+.main-header {
+    position: fixed; /* THÊM */
+    top: 0; /* THÊM */
+    left: 0; /* THÊM */
+    right: 0; /* THÊM */
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    z-index: 1000; /* THÊM */
+    backdrop-filter: blur(10px); /* THÊM */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* THÊM */
+    border-bottom: 3px solid #ffc300; /* THÊM */
+}
+
+.header-container {
+    max-width: 100%; 
+    margin: 0;      
+    padding: 15px 40px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1em;
+}
+
+.logo { font-size: 1.8em; font-weight: 700; color: var(--color-white); }
+
+.main-nav a, .user-actions a {
+    color: white;
+    margin-left: 25px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px 15px; /* THÊM */
+    border-radius: 5px; /* THÊM */
+    transition: all 0.3s ease; /* THÊM */
+}
+
+.main-nav a { margin: 0 15px; transition: color 0.3s; color: var(--light-color); }
+.main-nav a:hover, .user-actions a:hover { color: #ffc300; }
+.user-actions a { margin-left: 20px; color: var(--light-color); }
+.main-footer { background-color: var(--primary-color); color: var(--light-color); text-align: center; padding: 20px; font-size: 0.9em; margin-top: 50px; }
+.main-nav .active-page { /* THÊM */
+    background: rgba(255, 195, 0, 0.2); /* THÊM */
+    color: #ffc300;
+}
+
+/* --- NỘI DUNG THANH TOÁN --- */
+.checkout-page-container { padding: 40px 5%; background-color: #f4f7f6; min-height: 80vh; }
+.checkout-page-container h2 { text-align: center; color: var(--primary-color); margin-bottom: 30px; font-weight: bold; }
+.checkout-layout { display: flex; gap: 30px; max-width: 1200px; margin: 0 auto; align-items: flex-start; }
+
+.col-shipping { flex: 2; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+.col-shipping h3 { margin-bottom: 20px; color: var(--primary-color); border-bottom: 2px solid #eee; padding-bottom: 10px; font-weight: bold; }
+
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
+.form-group input, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; }
+.form-group input:focus { border-color: var(--primary-color); outline: none; }
+
+.payment-methods { margin-top: 15px; }
+.payment-option { display: flex; align-items: center; padding: 15px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; cursor: pointer; transition: 0.2s; }
+.payment-option:hover { border-color: var(--primary-color); background: #f0f8ff; }
+.payment-option input { margin-right: 15px; width: 18px; height: 18px; }
+
+.col-summary { flex: 1; }
+.order-box { background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: sticky; top: 20px; }
+.order-box h3 { margin-bottom: 20px; color: var(--primary-color); text-align: center; font-weight: bold; }
+.order-items-list { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; max-height: 300px; overflow-y: auto; }
+.summary-item { display: flex; justify-content: space-between; margin-bottom: 10px; }
+
+.order-total-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 1rem; color: #555; }
+.order-total-row.final { margin-top: 15px; padding-top: 15px; border-top: 2px solid #eee; font-weight: bold; color: #333; align-items: center; }
+#final-total { color: var(--red-alert); font-size: 1.5em; }
+
+.btn-checkout-submit { width: 100%; padding: 15px; background-color: var(--red-alert); color: white; border: none; border-radius: 5px; font-size: 1.1em; font-weight: bold; cursor: pointer; margin-top: 15px; transition: background 0.3s; }
+.btn-checkout-submit:hover { background-color: #c82333; }
+.back-to-cart { display: block; text-align: center; margin-top: 15px; color: #666; text-decoration: underline; font-size: 0.9em; }
+
+@media (max-width: 768px) {
+    .header-container { flex-direction: column; text-align: center; }
+    .checkout-layout { flex-direction: column; }
+}
+
+/* ===== QR CODE SECTION ===== */
+.qr-section {
+    margin-top: 30px;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #3498db;
+    animation: fadeIn 0.5s ease;
+}
+
+.qr-section h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.qr-section h3 i {
+    color: #3498db;
+}
+
+.qr-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.qr-box {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.qr-image {
+    flex-shrink: 0;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 8px;
+    background: white;
+}
+
+.qr-image img {
+    width: 200px;
+    height: 200px;
+    display: block;
+}
+
+.qr-info {
+    flex-grow: 1;
+}
+
+.qr-info h4 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
+.qr-info p {
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+.qr-info strong {
+    color: #333;
+    min-width: 150px;
+    display: inline-block;
+}
+
+.payment-instruction {
+    background: #fff8e1;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid #ffc107;
+    font-size: 0.9em;
+    color: #856404;
+}
+
+.payment-instruction i {
+    color: #ffc107;
+    margin-right: 8px;
+}
+
+/* Payment option icons */
+.payment-option i {
+    margin-right: 10px;
+    font-size: 1.2em;
+    color: #666;
+    width: 24px;
+    text-align: center;
+}
+
+.payment-option[for="payment-cod"] i {
+    color: #27ae60;
+}
+
+.payment-option[for="payment-banking"] i {
+    color: #2980b9;
+}
+
+.payment-option[for="payment-momo"] i {
+    color: #c2185b;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Nút xác nhận */
+.btn-checkout-submit i {
+    margin-right: 10px;
+}
+
+/* Payment method selected highlight */
+.payment-option input:checked ~ i,
+.payment-option input:checked ~ .payment-text {
+    color: #003366;
+    font-weight: 600;
+}
+
+.payment-option input:checked ~ i.fa-money-bill-wave {
+    color: #27ae60;
+}
+
+.payment-option input:checked ~ i.fa-university {
+    color: #2980b9;
+}
+
+.payment-option input:checked ~ i.fa-mobile-alt {
+    color: #c2185b;
+}
+
+/* Countdown timer */
+.countdown-timer {
+    background: #e3f2fd;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+    text-align: center;
+    font-weight: 600;
+    color: #1565c0;
+    border: 1px solid #bbdefb;
+}
+
+.countdown-timer i {
+    margin-right: 8px;
+}
+
+body {
+    padding-top: 80px; /* Đẩy nội dung xuống dưới header */
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+    
+    .main-nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 15px 0;
+    }
+    
+    .main-nav a {
+        margin: 5px;
+        font-size: 0.9rem;
+    }
+    
+    .user-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .user-actions a {
+        margin: 5px;
+        font-size: 0.9rem;
+    }
+    
+    body {
+        padding-top: 160px; /* Tăng cho mobile */
+    }
+}

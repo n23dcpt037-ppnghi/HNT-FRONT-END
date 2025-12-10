@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Quản lý Thông Tin - HNT Swim Club</title>
+    <link rel="stylesheet" href="styles.css"> </head>
+<body class="admin-body">
+
+   <header class="admin-header">
+        <div id="admin-header-container"></div>
+    </header>
+
+    <div class="admin-container">
+        <h1 class="admin-title">📰 Quản Lý Thông Tin</h1>
+
+        <div class="admin-tools">
+            <input type="text" placeholder="Tìm kiếm theo Tên, Mã Sản phẩm..." class="search-input">
+            <button type="button" class="btn-add-new" onclick="window.location.href='adminaddtt.html'">
+    ➕ Thêm Thông Tin Mới
+</button>
+        </div>
+
+        <div class="data-table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Mã Bài Đăng</th>
+                        <th>Tiêu Đề</th>
+                        <th>Tác Giả</th>
+                        <th>Lời Dẫn</th>
+                        <th>File Nội dung</th>
+                        <th>Danh Mục</th>
+                        <th>Ngày Đăng</th>
+						<th>Thao Tác</th>
+                    </tr>
+                </thead>
+                <tbody id="news-list">
+                   
+                    </tbody>
+            </table>
+        </div>
+
+    </div>
+<footer class="main-footer admin-footer">
+        <p>&copy; 2024 HNT Swim Club Official Merchandise. Phát triển bởi Đội ngũ HNT.</p>
+    </footer>
+   
+    
+    <script src="../scripts/admin.js"></script>
+     <script src="../scripts/admin-header.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Quản Lý Sản Phẩm - HNT Swim Club</title>
+    <link rel="stylesheet" href="styles.css"> </head>
+<body class="admin-body">
+
+     <header class="admin-header">
+        <div id="admin-header-container"></div>
+    </header>
+
+    <div class="admin-container">
+        <h1 class="admin-title">🛒 Quản Lý Sản Phẩm</h1>
+
+        <div class="admin-tools">
+            <input type="text" placeholder="Tìm kiếm theo Tên, Mã Sản phẩm..." class="search-input">
+            <button type="button" class="btn-add-new" onclick="window.location.href='adminaddsp.html'">
+                ➕ Thêm Sản Phẩm Mới
+            </button>
+        </div>
+
+        <div class="data-table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ảnh</th>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Phân Loại</th>
+                        <th>Giá (VNĐ)</th>
+                        <th>Số Lượng Tồn</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="product-list">
+                    </tbody>
+            </table>
+        </div>
+
+    </div>
+<footer class="main-footer admin-footer">
+        <p>&copy; 2024 HNT Swim Club Official Merchandise. Phát triển bởi Đội ngũ HNT.</p>
+    </footer>
+    <script src="../scripts/admin.js"></script>
+    <script> 
+        // --- TỰ ĐỘNG TÔ MÀU MENU ĐANG CHỌN ---
+        const path = window.location.pathname;
+        
+        // Xóa hết class active cũ (nếu có)
+        document.querySelectorAll('.admin-nav a').forEach(a => a.classList.remove('active-admin'));
+
+        // Kiểm tra xem đang ở trang nào để active trang đó
+        if (path.includes('admin.html') || path.includes('addtt')) 
+            document.getElementById('nav-tuyenthu').classList.add('active-admin');
+            
+        if (path.includes('adminsp.html') || path.includes('adminaddsp')) 
+            document.getElementById('nav-sanpham').classList.add('active-admin');
+            
+        if (path.includes('admindonhang.html')) 
+            document.getElementById('nav-donhang').classList.add('active-admin');
+            
+        if (path.includes('adminbao.html') || path.includes('adminaddbao')) 
+            document.getElementById('nav-thongtin').classList.add('active-admin');
+            
+        if (path.includes('adminsk.html') || path.includes('adminaddsk')) 
+            document.getElementById('nav-sukien').classList.add('active-admin');
+
+// Hàm đăng xuất (để chung đây luôn cho tiện)
+function logout() {
+    if(confirm('Bạn muốn đăng xuất?')) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        window.location.href = '../đn/login.html';
+    }
+}
+    </script>
+    <script src="../scripts/admin-header.js"></script>
+
+</body>
+</html>

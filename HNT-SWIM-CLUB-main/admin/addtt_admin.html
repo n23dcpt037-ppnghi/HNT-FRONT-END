@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Thêm Tuyển Thủ Mới - HNT Swim Club</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body class="admin-body">
+
+   <header class="admin-header">
+        <div id="admin-header-container"></div>
+    </header>
+
+    <div class="admin-container">
+        <h1 class="admin-title">➕ Thêm Tuyển Thủ Mới</h1>
+        <p class="subtitle">Vui lòng nhập đầy đủ thông tin chi tiết của tuyển thủ.</p>
+
+<form class="add-player-form large-form" id="athlete-form">
+    
+    <div class="form-section-card">
+        <h2>I. Thông Tin Cơ Bản</h2>
+        <div class="form-grid-2">
+            <div class="form-group">
+                <label for="p-name">Tên Tuyển Thủ (*)</label>
+                <input type="text" id="p-name" name="full_name" required placeholder="Nhập tên tuyển thủ">
+            </div>
+            <div class="form-group">
+                <label for="p-nickname">Biệt danh</label>
+                <input type="text" id="p-nickname" name="nickname">
+            </div>
+            <div class="form-group">
+                <label for="p-dob">Ngày sinh</label>
+                <input type="date" id="p-dob" name="date_of_birth">
+            </div>
+            <div class="form-group">
+                <label for="p-hometown">Quê quán</label>
+                <input type="text" id="p-hometown" name="hometown" placeholder="Hà Nội">
+            </div>
+            <div class="form-group">
+                <label for="p-height">Chiều cao (cm)</label>
+                <input type="number" id="p-height" name="height_cm" min="150">
+            </div>
+            <div class="form-group">
+                <label for="p-weight">Cân nặng (kg)</label>
+                <input type="number" id="p-weight" name="weight_kg" min="50">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section-card">
+        <h2>II. Chuyên Môn & Hợp Đồng</h2>
+        <div class="form-grid-2">
+            <div class="form-group">
+                <label for="p-position">Vị trí/Chuyên môn (*)</label>
+                <input type="text" id="p-position" name="position" required placeholder="Ví dụ: Bơi tự do 50m">
+            </div>
+            <div class="form-group">
+                <label for="p-specialty">Chuyên môn phụ</label>
+                <input type="text" id="p-specialty" name="specialty" placeholder="Ví dụ: Bơi ngửa 100m">
+            </div>
+            <div class="form-group">
+                <label for="p-contract-start">Ngày ký Hợp đồng</label>
+                <input type="date" id="p-contract-start" name="contract_start">
+            </div>
+            <div class="form-group">
+                <label for="p-contract-end">Ngày hết hạn Hợp đồng</label>
+                <input type="date" id="p-contract-end" name="contract_end">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section-card">
+        <h2>III. Thành Tích & Mô Tả</h2>
+        <div class="form-grid-1">
+            <div class="form-group">
+                <label for="p-achievement">Thành tích nổi bật</label>
+                <textarea id="p-achievement" name="achievements" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="p-competition-history">Lịch sử thi đấu</label>
+                <textarea id="p-competition-history" name="competition_history" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="p-bio">Mô tả/Tiểu sử</label>
+                <textarea id="p-bio" name="description" rows="4"></textarea>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-section-card">
+        <h2>IV. Hình Ảnh</h2>
+        <div class="form-group">
+            <label for="p-image">Ảnh Đại diện</label>
+            <input type="file" id="p-image" name="image" accept="image/*">
+            <p class="note">Chọn ảnh không quá 2MB (JPG, PNG)</p>
+            <div id="current-image-container"></div>
+        </div>
+    </div>
+
+    <div class="form-actions-full">
+        <button type="submit" class="btn-submit primary-button" id="submit-btn">Lưu Tuyển Thủ</button>
+        <button type="button" class="btn-cancel secondary-button" onclick="window.location.href='admin.html'">Hủy bỏ</button>
+    </div>
+</form>
+
+    </div>
+
+    <footer class="main-footer admin-footer">
+        <p>&copy; 2024 HNT Swim Club Official Merchandise. Phát triển bởi Đội ngũ HNT.</p>
+    </footer>
+<script src="../scripts/main.js"></script> 
+<script src="../scripts/admin.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const API_BASE = 'http://localhost:3000/api';
+    const form = document.getElementById('athlete-form');
+    const urlParams = new URLSearchParams(window.location.search);
+    const athleteId = urlParams.get('id');
+    
+    // Lấy token từ localStorage
+    const token = localStorage.getItem('token');
+    console.log('Token:', token);
+    
+    // Nếu không có token, đăng nhập lại
+    if (!token) {
+        alert('Vui lòng đăng nhập trước!');
+        window.location.href = '../đn/login.html';
+        return;
+    }
+    
+    // Headers với token
+    const headers = {
+        'Authorization': `Bearer ${token}`
+    };
+    
+    // Nếu có ID = đang sửa
+    if (athleteId) {
+        document.querySelector('.admin-title').textContent = '✏️ Sửa Tuyển Thủ';
+        document.querySelector('.subtitle').textContent = 'Chỉnh sửa thông tin tuyển thủ';
+        document.querySelector('#submit-btn').textContent = 'Cập Nhật';
+        loadAthleteData(athleteId);
+    }
+    
+    // Load data khi sửa
+    async function loadAthleteData(id) {
+        try {
+            console.log(`Đang tải dữ liệu ID: ${id}`);
+            const response = await fetch(`${API_BASE}/athletes/${id}`, {
+                headers: headers
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const athlete = await response.json();
+            console.log('Data nhận được:', athlete);
+            
+            // Điền form
+            document.getElementById('p-name').value = athlete.full_name || '';
+            document.getElementById('p-nickname').value = athlete.nickname || '';
+            
+            if (athlete.date_of_birth) {
+                document.getElementById('p-dob').value = athlete.date_of_birth.split('T')[0];
+            }
+            
+            document.getElementById('p-hometown').value = athlete.hometown || '';
+            document.getElementById('p-height').value = athlete.height_cm || '';
+            document.getElementById('p-weight').value = athlete.weight_kg || '';
+            document.getElementById('p-position').value = athlete.position || '';
+            document.getElementById('p-specialty').value = athlete.specialty || '';
+            
+            if (athlete.contract_start) {
+                document.getElementById('p-contract-start').value = athlete.contract_start.split('T')[0];
+            }
+            
+            if (athlete.contract_end) {
+                document.getElementById('p-contract-end').value = athlete.contract_end.split('T')[0];
+            }
+            
+            document.getElementById('p-achievement').value = athlete.achievements || '';
+            document.getElementById('p-competition-history').value = athlete.competition_history || '';
+            document.getElementById('p-bio').value = athlete.description || '';
+            
+            // Hiển thị ảnh hiện tại
+            if (athlete.image_url) {
+                const imgUrl = `http://localhost:3000/tuyenthu/${athlete.image_url}`;
+                document.getElementById('current-image-container').innerHTML = `
+                    <div style="margin-top:10px; padding:10px; background:#f5f5f5; border-radius:5px;">
+                        <p><strong>Ảnh hiện tại:</strong></p>
+                        <img src="${imgUrl}" width="100" style="border-radius:5px; margin-top:5px;" 
+                             onerror="this.src='https://placehold.co/100x100?text=No+Img'">
+                    </div>
+                `;
+            }
+            
+        } catch (error) {
+            console.error('Lỗi tải data:', error);
+            alert('Không thể tải thông tin: ' + error.message);
+        }
+    }
+    
+    // Xử lý submit form
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submit-btn');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Đang xử lý...';
+
+           console.log('=== DEBUG FORM DATA ===');
+    console.log('Input p-name value:', document.getElementById('p-name').value);
+    console.log('Input p-name name:', document.getElementById('p-name').getAttribute('name'));
+    
+    // Kiểm tra tất cả inputs
+    const inputs = form.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+        console.log(`${input.name}:`, input.value);
+    });
+    
+    // Tạo FormData
+    const formData = new FormData(form);
+    
+    // DEBUG: Xem FormData thực tế
+    console.log('=== FORMDATA ENTRIES ===');
+    for (let [key, value] of formData.entries()) {
+        console.log(`${key}:`, value, '(type:', typeof value, ')');
+    }
+        
+        try {
+            // Tạo FormData từ form
+            const formData = new FormData(form);
+            
+            // Debug: xem dữ liệu gửi đi
+            console.log('FormData gửi đi:');
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}:`, value);
+            }
+            
+            // KHÔNG thêm Content-Type header khi dùng FormData
+            // Browser sẽ tự set đúng Content-Type
+            
+            let response;
+            if (athleteId) {
+                // UPDATE
+                response = await fetch(`${API_BASE}/athletes/${athleteId}`, {
+                    method: 'PUT',
+                    headers: headers,  // Chỉ cần token header
+                    body: formData     // FormData tự set Content-Type
+                });
+            } else {
+                // CREATE
+                response = await fetch(`${API_BASE}/athletes`, {
+                    method: 'POST',
+                    headers: headers,  // Chỉ cần token header
+                    body: formData     // FormData tự set Content-Type
+                });
+            }
+            
+            console.log('Response status:', response.status);
+            const result = await response.json();
+            console.log('Kết quả từ server:', result);
+            
+            if (response.ok) {
+                alert(athleteId ? '✅ Cập nhật thành công!' : '✅ Thêm tuyển thủ thành công!');
+                window.location.href = 'admin.html';
+            } else {
+                throw new Error(result.message || `Lỗi ${response.status}`);
+            }
+            
+        } catch (error) {
+            console.error('Lỗi submit:', error);
+            alert('❌ Lỗi: ' + error.message);
+            
+            // Nếu lỗi 401, chuyển về trang login
+            if (error.message.includes('401') || error.message.includes('token')) {
+                alert('Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại!');
+                window.location.href = '../đn/login.html';
+            }
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
+    });
+});
+</script>
+ <script src="../scripts/admin-header.js"></script>
+</body>
+</html>

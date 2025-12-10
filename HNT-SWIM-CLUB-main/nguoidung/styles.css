@@ -1,0 +1,278 @@
+:root {
+    --primary-color: #003366; /* Xanh đậm HNT */
+    --secondary-color: #0056b3; /* Xanh nhạt hơn */
+    --light-color: #ffffff;
+    --dark-text: #333;
+    --border-color: #e0e0e0;
+    --bg-light: #f9f9f9;
+    --success-color: #28a745; /* Màu xanh lá cho 'Hoàn thành' */
+    --warning-color: #ffc107; /* Màu vàng cho 'Đang xử lý' */
+    --gap-spacing: 30px; 
+}
+
+/* --- Global Reset & Body --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: var(--dark-text);
+    background-color: var(--light-color);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* --- HEADER --- */
+.main-header {
+    position: fixed; /* THÊM */
+    top: 0; /* THÊM */
+    left: 0; /* THÊM */
+    right: 0; /* THÊM */
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    z-index: 1000; /* THÊM */
+    backdrop-filter: blur(10px); /* THÊM */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* THÊM */
+    border-bottom: 3px solid #ffc300; /* THÊM */
+}
+
+.header-container {
+      max-width: 100%; /* Đổi thành 100% để full màn hình */
+    margin: 0;       /* Bỏ margin auto đi */
+    padding: 15px 40px; /* Tăng padding 2 bên lên xíu cho nó không bị sát lề quá */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1em;
+}
+
+.logo a {
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.main-nav a {
+    margin: 0 15px;
+    transition: color 0.3s;
+}
+
+.main-nav a:hover,
+.user-actions a:hover,
+.user-actions a.current-page {
+    color: #ffc300; /* Màu nhấn */
+}
+
+.user-actions a {
+    margin-left: 20px;
+}
+
+/* --- NỘI DUNG TÀI KHOẢN --- */
+.account-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.account-header-menu {
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: var(--gap-spacing);
+}
+
+.account-header-menu h1 {
+    font-size: 2em;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+/* Menu điều hướng con */
+.account-menu {
+    display: flex;
+    gap: 25px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.account-menu a {
+    color: var(--dark-text);
+    font-weight: 500;
+    padding: 5px 0;
+    transition: color 0.3s;
+}
+
+.account-menu a:hover {
+    color: var(--secondary-color);
+}
+
+.account-menu a.active-link {
+    color: var(--primary-color);
+    font-weight: bold;
+    border-bottom: 3px solid var(--primary-color);
+}
+
+/* Bố cục 2 cột chính */
+.main-content-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 2fr; /* Thông tin nhỏ hơn Lịch sử đơn hàng */
+    gap: var(--gap-spacing);
+}
+
+/* Định kiểu cho các HỘP/CARD */
+.account-section {
+    padding: 25px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background-color: var(--bg-light);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.account-section h2 {
+    color: var(--primary-color);
+    font-size: 1.5em;
+    border-bottom: 1px solid var(--primary-color);
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+/* Form Thông tin */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-group input[readonly] {
+    background-color: #eeeeee;
+    cursor: default;
+}
+
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.primary-button, .secondary-button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight:bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.primary-button {
+    background-color: var(--primary-color);
+    color: var(--light-color);
+}
+
+.primary-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.secondary-button {
+    background-color: #e0e0e0;
+    color: var(--dark-text);
+}
+
+/* Lịch Sử Đơn Hàng */
+.order-item {
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--light-color);
+    border-left: 5px solid var(--primary-color); /* Nhấn mạnh bằng đường viền */
+}
+
+.order-id-status {
+    display: flex;
+    flex-direction: column;
+}
+
+.order-id {
+    color: var(--primary-color);
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.order-status {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    color: var(--light-color);
+}
+
+.completed-status {
+    background-color: var(--success-color);
+}
+
+.processing-status {
+    background-color: var(--warning-color);
+    color: var(--dark-text);
+}
+
+.order-details p {
+    margin: 0;
+    line-height: 1.4;
+    text-align: right;
+}
+
+.view-detail-link {
+    display: block;
+    color: var(--secondary-color);
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+    .main-content-grid {
+        grid-template-columns: 1fr; /* Chuyển sang 1 cột trên tablet/mobile */
+    }
+    .account-menu {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .order-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .order-details {
+        width: 100%;
+    }
+    .order-details p, .view-detail-link {
+        text-align: left;
+    }
+}
+
+/* --- FOOTER --- */
+.main-footer {
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9em;
+}

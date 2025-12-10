@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Sản Phẩm - HNT Swim Club</title>
+    <link rel="stylesheet" href="style.css"> 
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<style>
+    body {
+    padding-top: 50px; /* Đẩy nội dung xuống dưới header fixed */
+}
+
+main {
+    padding-top: 20px; /* Thêm nếu có thẻ main */
+}
+</style>
+<body>
+
+    <header class="header">
+        <div class="logo">HNT Swim Club</div>
+        <nav class="nav-menu">
+            <a href="trangchu.html">Trang Chủ</a>
+            <a href="../tuyenthu/user.html">Tuyển Thủ</a>
+            <a href="danhmuc_sp.html">Sản Phẩm</a>
+            <a href="../sk/sukien.html">Sự Kiện</a>
+            <a href="../bao/bao.html">Thông Tin</a>
+        </nav>
+        <div class="user-actions">
+            <a href="../đn/login.html">Đăng Nhập</a>
+            <a href="../nguoidung/nguoidung.html">Hồ Sơ</a>
+            <a href="../giohang/ghtt.html">🛒 Giỏ Hàng</a>
+        </div>
+    </header>
+
+    <div class="product-detail-container">
+        <div class="product-gallery">
+            <div class="main-image">
+                <img id="main-img" src="" alt="Đang tải ảnh..." onerror="this.src='https://placehold.co/500x500?text=No+Image'">
+            </div>
+            
+            <div class="thumbnail-gallery">
+                <img id="thumb-1" src="" alt="View 1" class="active-thumb" onclick="changeImage(this)">
+                
+                <img id="thumb-2" src="../../images/default-product.jpg" alt="View 2" onclick="changeImage(this)" onerror="this.src='https://placehold.co/100x100?text=View+2'">
+            </div>
+        </div>
+
+        <div class="product-info">
+            <h1 class="product-name" id="product-name">Đang tải tên sản phẩm...</h1>
+            
+            <p class="product-brand">Thương hiệu: HNT Official</p>
+            
+            <div class="price-section">
+                <span class="current-price" id="product-price">0 VNĐ</span>
+                
+                <span class="original-price" id="original-price" style="display:none"></span>
+            </div>
+            
+            <p class="availability">Tình trạng: <span style="color: green; font-weight: bold;">Còn hàng</span></p>
+
+            <div class="option-group">
+                <label>Kích cỡ:</label>
+                <div class="size-options">
+                    <button class="size-btn active" onclick="selectSize(this)">S</button>
+                    <button class="size-btn" onclick="selectSize(this)">M</button>
+                    <button class="size-btn" onclick="selectSize(this)">L</button>
+                </div>
+            </div>
+
+            <div class="quantity-add-cart">
+                <div class="quantity-selector">
+                    <input type="number" value="1" min="1" max="100">
+                </div>
+                <button class="btn-primary add-to-cart-btn">🛒 Thêm vào Giỏ Hàng</button>
+            </div>
+        </div>
+    </div>
+
+    <section class="product-description-tabs">
+        <div class="tab-header">
+            <button class="tab-btn active">Mô Tả Chi Tiết</button>
+        </div>
+        <div class="tab-content">
+            <div class="content-box active">
+                <h3>Thông tin sản phẩm</h3>
+                <p id="product-desc" style="white-space: pre-line;">Đang tải mô tả...</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2024 HNT Swim Club Official Merchandise. Phát triển bởi Đội ngũ HNT.</p>
+    </footer>
+
+    <script src="detail.js"></script>
+    <script src="../scripts/main.js"></script>
+</body>
+</html>

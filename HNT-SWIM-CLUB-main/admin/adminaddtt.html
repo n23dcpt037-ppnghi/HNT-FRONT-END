@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Thêm Bài Báo Mới</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body class="admin-body">
+
+   <header class="admin-header">
+        <div id="admin-header-container"></div>
+    </header>
+
+    <div class="admin-container form-page">
+        <h1 class="admin-title">➕ Thêm Bài Báo Mới</h1>
+        <p class="form-instruction">Vui lòng nhập đầy đủ thông tin chi tiết của bài báo.</p>
+        
+        <form id="add-article-form">
+            
+             <fieldset class="form-section">
+                <legend>I. Thông Tin Cơ Bản</legend>
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="product-id">Mã Bài Đăng (*)</label>
+                        <input type="text" id="article-id" placeholder="Ví dụ: TT001">
+                    </div>
+                    <div class="form-group half">
+                        <label for="product-name">Tiêu Đề (*)</label>
+                        <input type="text" id="article-title" placeholder="Nhập tiêu đề bài báo">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="category">Danh Mục (*)</label>
+                        <select id="category">
+                        <option value="">Chọn loại</option>
+                        <option value="gioi-thieu">Giới Thiệu</option>
+                        <option value="phong-van">Phỏng Vấn</option>
+                        <option value="giai-dau">Giải Đấu</option>
+                        <option value="giai-thuong">Giải Thưởng</option>
+                        <option value="tin-tuc">Tin Tức Khác</option>
+                    </select>
+                    </div>
+                    <div class="form-group half">
+                        <label for="product-id">Tên Tác Giả (*)</label>
+                        <input type="text" id="author" placeholder="Nhập tên tác giả của bài báo">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                   <div class="form-group">
+                        <label for="p-contract-start">Ngày Đăng Bài</label>
+                        <input type="date" id="published-date">
+                    </div>
+                    
+             <div class="form-group half">
+    <label for="image-upload">Ảnh Đại Diện (*)</label>
+    <input type="file" id="image-upload" accept="image/*">
+    <p class="note">Chọn tệp không quá 2MB (JPG, PNG)</p>
+    <!-- Preview sẽ được thêm tự động bởi JS -->
+</div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend>II. Nội Dung Bài Báo</legend>
+                <div class="form-group full">
+                    <label for="short-desc">Lời Dẫn Ngắn</label>
+                    <textarea id="summary" rows="5"></textarea>
+                </div>
+                <div class="form-group full">
+                    <label for="long-desc">Nội Dung Chi Tiết</label>
+                    <textarea id="content" rows="15"></textarea>
+                </div>
+            
+                <div class="file-upload-section">
+                    <label class="file-upload-label">Hoặc Tải lên File Nội dung (PDF/DOC)</label>
+                    <div class="custom-file-input-wrapper">
+                        <input type="file" id="content-file" name="contentFile" accept=".pdf,.doc,.docx" class="custom-file-input">
+                        <span class="file-input-trigger">📂 Chọn Tệp Nội Dung</span>
+                        <span class="file-name-display">Không có tệp nào được chọn</span>
+                    </div>
+                    </div>
+             </fieldset>	
+            
+             <div class="form-actions">
+                 <button type="submit" class="btn-save">Lưu Bài Báo</button>
+                 <button type="button" class="btn-cancel" onclick="window.location.href='adminbao.html'">Hủy</button>
+             </div>
+        </form>
+	</div>
+<footer class="main-footer admin-footer">
+        <p>&copy; 2024 HNT Swim Club Official Merchandise. Phát triển bởi Đội ngũ HNT.</p>
+    </footer>
+    <script src="../scripts/tinbai.js"></script>>
+     <script src="../scripts/admin-header.js"></script>
+</body>
+</html>

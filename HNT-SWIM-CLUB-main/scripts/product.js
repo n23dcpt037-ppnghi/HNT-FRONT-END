@@ -102,18 +102,16 @@ function addToCartNow(productId) {
     if (existingItemIndex >= 0) {
         cart[existingItemIndex].quantity += 1;
     } else {
-        // QUAN TRỌNG: Đảm bảo lưu đúng trường image
-        // API dùng 'image_url', nhưng giỏ hàng dùng 'image'
         const imageFromAPI = product.image_url || product.image;
         console.log('Image to save:', imageFromAPI);
         
         const cartItem = {
             id: product.product_id,
             name: product.product_name,
-            price: parseInt(product.price_vnd), // Chuyển thành số
+            price: parseInt(product.price_vnd), 
             size: 'M',
             quantity: 1,
-            // SỬA Ở ĐÂY: Dùng imageFromAPI
+
             image: imageFromAPI
         };
         
@@ -154,9 +152,38 @@ function renderProducts(products) {
         // Fix lỗi giá tiền: Parse sang số nguyên để bỏ .00 rồi mới format
         const price = product.price_vnd || 0; 
         const formattedPrice = parseInt(price).toLocaleString('vi-VN'); // Ra dạng 350.000
-        
-        // Link ảnh (giữ nguyên logic cũ của bạn)
-        const imageUrl = product.image_url || 'images/default.jpg';
+        const rawImageUrl = product.image_url || product.image || '';
+
+if (rawImageUrl) {
+    // Chuẩn hóa đường dẫn
+    if (rawImageUrl.startsWith('/')) {
+        imageUrl = `http://localhost:3000${rawImageUrl}`;
+    } else if (rawImageUrl.includes('://')) {
+        imageUrl = rawImageUrl;
+    } else if (rawImageUrl.includes('uploads/')) {
+        imageUrl = `http://localhost:3000/${rawImageUrl}`;
+    } else {
+        imageUrl = `http://localhost:3000/uploads/products/${rawImageUrl}`;
+    }
+}
+
+
+if (product.image_url) {
+    // Xử lý các trường hợp:
+    if (product.image_url.startsWith('http')) {
+        // Đã là URL đầy đủ
+        imageUrl = product.image_url;
+    } else if (product.image_url.includes('uploads/')) {
+        // Ảnh từ uploads
+        imageUrl = `http://localhost:3000/${product.image_url}`;
+    } else if (!product.image_url.includes('/')) {
+        // Chỉ có tên file (ảnh mới upload từ admin)
+        imageUrl = `http://localhost:3000/uploads/products/${product.image_url}`;
+    } else {
+        // Ảnh cũ trong thư mục images/
+        imageUrl = product.image_url;
+    }
+}
 
         html += `
             <div class="product-card" data-id="${product.product_id}">
@@ -182,6 +209,21 @@ function renderProducts(products) {
     });
     
     container.innerHTML = html;
+}
+
+function getProductImageUrl(imageUrl) {
+    // Mặc định
+    if (!imageUrl) {
+        return 'http://localhost:3000/sp_home/images/default.jpg';
+    }
+    
+    // Nếu đã là URL đầy đủ (từ backend chuẩn hóa)
+    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+        return imageUrl;
+    }
+    
+    // Xử lý các trường hợp còn lại (nếu có)
+    return imageUrl;
 }
 
 /**
